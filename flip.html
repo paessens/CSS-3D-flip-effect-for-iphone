@@ -1,58 +1,92 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<title>Flip effect in CSS for iPhone</title>
-		<meta name="viewport" content="width=320; initial-scale=1.0; maximum-scale=1.0; user-scalable=no;"/>
-		<meta name="apple-mobile-web-app-capable" content="yes" />
-		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
-
-		<style type="text/css">
-			body {
-				font: 13px Arial, sans-serif;
-				margin: 0;
-			}
-			#flip {
-				position: absolute;
-				min-height: 460px;
-				width: 320px;
-				-webkit-perspective: 1000;
-				background: #000;
-			}
-			#front, #back {
-				background: #fff;
-				position: absolute;
-				top: 0;
-				width: 100%;
-				min-height: 100%;
-				-webkit-backface-visibility: hidden;
-				-webkit-transform-style: preserve-3d;
-				-webkit-transition: all .5s ease-in-out;
-			}
-			#front {
-				-webkit-transform: rotateY(0deg);
-			}
-			#back {
-				-webkit-transform: rotateY(180deg);
-			}
-			div:target#flip #front {
-				-webkit-transform: rotateY(-180deg);
-			}
-			div:target#flip #back {
-				-webkit-transform: rotateY(0deg);
-			}
-			
-		</style>
-	</head>
-	<body>
-		<div id="flip">
-			<div id="front">
-				FRONT
-				<p><a href="#flip">Flip to back !</a></p>
-			</div>
-			<div id="back">
-				BACK
-				<p><a href="#">Flip to front !</a></p>
-			</div>
-		</div>
-	</body>
+<html lang="en">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flat Earth Joke by Heinrich Paeßens</title>
+<link rel="preload" as="image" href="img/bluemarble_west.jpeg">
+<link rel="preload" as="image" href="img/bluemarble_east.jpeg">
+	<style>
+		.card {
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			perspective: 1000px;
+			border: 1px solid black;
+			color: black;
+			background-color: black;
+		}
+		.card-inner {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			text-align: center;
+			transition: transform 2s;
+			transform-style: preserve-3d;
+		}
+		.card:hover .card-inner {
+		   -webkit-transform: rotateY(180deg);
+			transform: rotateY(180deg);
+		}
+		.card-front, .card-back {
+         -webkit-backface-visibility: hidden; /* Safari */
+          backface-visibility: hidden;
+		}
+		.card-front {
+			color: black;
+			background-color: black;
+		}
+		.card-back {
+         color: black;
+         position: absolute;
+			background-color: black;
+			-webkit-transform: rotateY(180deg);
+			transform: rotateY(180deg);
+			  top: 0;
+		}
+		div:target#card #card-inner #card-front {
+			-webkit-transform: rotateY(-180deg);
+		}
+		div:target#card #card-inner #card-back {
+			-webkit-transform: rotateY(0deg);
+		}
+		.flip-card .card {
+         height: 100%;
+         overflow-y: auto;
+      }
+      .card-content {
+         overflow-y: auto;
+      }
+      body, .page-content {
+         background: black;
+      }
+		script {
+         display: none;
+      }
+	</style>
+<script >
+$(function () {
+  $(".flip-card").click(function () {
+    $(this).toggleClass("flip-hover");
+  });
+  // Check for iOS devices to overcome :hover issues
+  let isIOS =
+    /iPad|iPhone|iPod/.test(navigator.platform) ||
+    /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  if (isIOS) {
+    $(".cc-effect").removeClass("cc-effect").addClass("cc-effect-ios");
+  }
+});
+</script>
+</head>
+<body>
+	<center>
+		<div class="card">
+			<div class="card-inner">
+				<div class="card-front"><img src="img/bluemarble_west.jpeg" alt="Blue Marbel west" style="width:100%; object-fit:cover;"></div>
+            <div class="card-back"><img src="img/bluemarble_east.jpeg" alt="Blue Marbel east"style="width:100%; object-fit: cover;"></div>
+         </div>
+      </div>
+   </center>
+</body>
 </html>
